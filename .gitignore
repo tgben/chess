@@ -37,3 +37,4 @@ coverage/
 
 # Docker related
 docker-compose.override.yml
+docker
