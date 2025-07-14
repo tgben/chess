@@ -27,9 +27,9 @@ interface ChartContainerProps {
 
 export const ChartContainer: React.FC<ChartContainerProps> = ({ children, title }) => {
   return (
-    <div className="border-2 border-white bg-white rounded-sm p-6 flex flex-col items-center">
+    <div className="border-2 border-primary rounded-sm p-6 flex flex-col items-center">
       {title && (
-        <h3 className="text-md mb-3 text-gray-700">
+        <h3 className="text-md mb-3 text-gray">
           {title}
         </h3>
       )}
@@ -65,28 +65,28 @@ export const VerticalBarChartComponent: React.FC<BarChartProps> = ({
       >
         <CartesianGrid
           strokeDasharray="3 3"
-          stroke="#ddd"
+          stroke="hsl(218, 10.80%, 85.50%)"
           horizontal={true}
         />
         <XAxis
           type="number"
           domain={[50, 70]}
-          stroke="#555"
+          stroke="hsl(218, 10.80%, 85.50%)"
           fontSize={10}
         />
         <YAxis
           dataKey="name"
           type="category"
           width={150}
-          stroke="#555"
+          stroke="hsl(218, 10.80%, 85.50%)"
           fontSize={10}
           tickLine={false}
         />
         <Tooltip
           contentStyle={{
-            backgroundColor: "white",
-            color: "black",
-            border: "1px solid #ddd",
+            backgroundColor: "hsl(227, 13.20%, 20.80%)",
+            color: "hsl(0, 0.00%, 100.00%)",
+            border: "1px solid hsl(200, 59.80%, 64.90%)",
             borderRadius: "0px",
             fontSize: "12px",
           }}
@@ -110,23 +110,23 @@ export const OpeningPopularityChart: React.FC<OpeningPopularityChartProps> = ({ 
       >
         <CartesianGrid
           strokeDasharray="3 3"
-          stroke="#ddd"
+          stroke="hsl(218, 10.80%, 85.50%)"
         />
         <XAxis
           dataKey="year"
-          stroke="#555"
+          stroke="hsl(218, 10.80%, 85.50%)"
           fontSize={10}
         />
         <YAxis
-          stroke="#555"
+          stroke="hsl(218, 10.80%, 85.50%)"
           fontSize={10}
           domain={[1.25, 3]}
         />
         <Tooltip
           contentStyle={{
-            backgroundColor: "white",
-            color: "black",
-            border: "1px solid #ddd",
+            backgroundColor: "hsl(227, 13.20%, 20.80%)",
+            color: "hsl(0, 0.00%, 100.00%)",
+            border: "1px solid hsl(200, 59.80%, 64.90%)",
             borderRadius: "0px",
             fontSize: "12px",
           }}

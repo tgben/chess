@@ -1,1 +1,10 @@
 @import 'tailwindcss';
+
+@theme {
+  --color-primary: hsl(200, 59.80%, 64.90%);
+  --color-primary-op: hsl(287, 60%, 65%, 0.1);
+  --color-text-gray: hsl(218, 10.80%, 85.50%);
+  --color-gray-op: hsl(219, 14%, 71%, 0.1);
+  --color-bg-main: hsl(227, 13.20%, 20.80%);
+  --color-text-white: hsl(0, 0.00%, 100.00%);
+}

@@ -18,7 +18,7 @@ interface SectionTitleProps {
 
 export const SectionTitle: React.FC<SectionTitleProps> = ({ title }) => {
   return (
-    <div className="font-[200] text-gray-600 text-md underline underline-offset-6 text-center">
+    <div className="font-[200] text-gray text-md underline underline-offset-6 text-center">
       {" "}
       {title}{" "}
     </div>
