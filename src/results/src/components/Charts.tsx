@@ -21,24 +21,15 @@ const lineDataKeys = Object.keys(openingPopularityData[0])
 const lineColors = ["#FF6B6B", "#1A535C", "#F9C74F", "#6A0572", "#4ECDC4"];
 
 interface ChartContainerProps {
-  darkMode: boolean;
   children: ReactElement; 
   title?: string;
 }
 
-export const ChartContainer: React.FC<ChartContainerProps> = ({ darkMode, children, title }) => {
+export const ChartContainer: React.FC<ChartContainerProps> = ({ children, title }) => {
   return (
-    <div
-      className={`border-2 ${
-        darkMode ? "border-[#111] bg-[#111]" : "border-white bg-white"
-      } rounded-sm p-6 flex flex-col items-center transition-colors duration-300`}
-    >
+    <div className="border-2 border-white bg-white rounded-sm p-6 flex flex-col items-center">
       {title && (
-        <h3
-          className={`text-md mb-3 ${
-            darkMode ? "text-gray-300" : "text-gray-700"
-          }`}
-        >
+        <h3 className="text-md mb-3 text-gray-700">
           {title}
         </h3>
       )}
@@ -53,7 +44,6 @@ export const ChartContainer: React.FC<ChartContainerProps> = ({ darkMode, childr
 
 interface BarChartProps {
   data: any[];
-  darkMode: boolean;
   title: string;
   color: string;
   margin?: { top: number; right: number; left: number; bottom: number };
@@ -61,13 +51,12 @@ interface BarChartProps {
 
 export const VerticalBarChartComponent: React.FC<BarChartProps> = ({ 
   data, 
-  darkMode, 
   title, 
   color,
   margin = { top: 10, right: 0, left: -20, bottom: 0 }
 }) => {
   return (
-    <ChartContainer darkMode={darkMode} title={title}>
+    <ChartContainer title={title}>
       <BarChart
         className="tracking-normal"
         data={data}
@@ -76,28 +65,28 @@ export const VerticalBarChartComponent: React.FC<BarChartProps> = ({
       >
         <CartesianGrid
           strokeDasharray="3 3"
-          stroke={darkMode ? "#444" : "#ddd"}
+          stroke="#ddd"
           horizontal={true}
         />
         <XAxis
           type="number"
           domain={[50, 70]}
-          stroke={darkMode ? "#aaa" : "#555"}
+          stroke="#555"
           fontSize={10}
         />
         <YAxis
           dataKey="name"
           type="category"
           width={150}
-          stroke={darkMode ? "#aaa" : "#555"}
+          stroke="#555"
           fontSize={10}
           tickLine={false}
         />
         <Tooltip
           contentStyle={{
-            backgroundColor: darkMode ? "#111" : "white",
-            color: darkMode ? "#ddd" : "black",
-            border: darkMode ? "1px solid #444" : "1px solid #ddd",
+            backgroundColor: "white",
+            color: "black",
+            border: "1px solid #ddd",
             borderRadius: "0px",
             fontSize: "12px",
           }}
@@ -110,35 +99,34 @@ export const VerticalBarChartComponent: React.FC<BarChartProps> = ({
 
 interface OpeningPopularityChartProps {
   data: any[];
-  darkMode: boolean;
 }
 
-export const OpeningPopularityChart: React.FC<OpeningPopularityChartProps> = ({ data, darkMode }) => {
+export const OpeningPopularityChart: React.FC<OpeningPopularityChartProps> = ({ data }) => {
   return (
-    <ChartContainer darkMode={darkMode}>
+    <ChartContainer>
       <LineChart
         data={data}
         margin={{ top: 10, right: 50, left: 0, bottom: 10 }}
       >
         <CartesianGrid
           strokeDasharray="3 3"
-          stroke={darkMode ? "#444" : "#ddd"}
+          stroke="#ddd"
         />
         <XAxis
           dataKey="year"
-          stroke={darkMode ? "#aaa" : "#555"}
+          stroke="#555"
           fontSize={10}
         />
         <YAxis
-          stroke={darkMode ? "#aaa" : "#555"}
+          stroke="#555"
           fontSize={10}
           domain={[1.25, 3]}
         />
         <Tooltip
           contentStyle={{
-            backgroundColor: darkMode ? "#111" : "white",
-            color: darkMode ? "#ddd" : "black",
-            border: darkMode ? "1px solid #444" : "1px solid #ddd",
+            backgroundColor: "white",
+            color: "black",
+            border: "1px solid #ddd",
             borderRadius: "0px",
             fontSize: "12px",
           }}

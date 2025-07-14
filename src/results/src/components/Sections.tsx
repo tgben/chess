@@ -15,38 +15,31 @@ import {
 
 interface SectionTitleProps {
   title: string;
-  darkMode: boolean;
 }
 
-export const SectionTitle: React.FC<SectionTitleProps> = ({ title, darkMode }) => {
+export const SectionTitle: React.FC<SectionTitleProps> = ({ title }) => {
   return (
-    <div
-      className={`font-[200] ${
-        darkMode ? "text-gray-300" : "text-gray-600"
-      } text-md underline underline-offset-6 text-center`}
-    >
+    <div className="font-[200] text-gray-600 text-md underline underline-offset-6 text-center">
       {" "}
       {title}{" "}
     </div>
   );
 };
 
-interface SectionProps {
-  darkMode: boolean;
-}
+interface SectionProps {}
 
-export const OpeningPopularitySection: React.FC<SectionProps> = ({ darkMode }) => {
+export const OpeningPopularitySection: React.FC<SectionProps> = () => {
   return (
     <>
       <DottedSeparator
         dotCount={80}
-        dotColor={darkMode ? "bg-gray-300" : "bg-gray-600"}
+        dotColor="bg-gray-600"
       />
       <div className="p-4" />
-      <SectionTitle title="Opening Popularity Trends (2012-2024)" darkMode={darkMode} />
+      <SectionTitle title="Opening Popularity Trends (2012-2024)" />
       <div className="p-4" />
       
-      <OpeningPopularityChart data={openingPopularityData} darkMode={darkMode} />
+      <OpeningPopularityChart data={openingPopularityData} />
       
       <div className="p-4" />
       <div className="py-4">
@@ -75,16 +68,16 @@ export const OpeningPopularitySection: React.FC<SectionProps> = ({ darkMode }) =
   );
 };
 
-export const BestOpeningsSection: React.FC<SectionProps> = ({ darkMode }) => {
+export const BestOpeningsSection: React.FC<SectionProps> = () => {
   return (
     <>
       <div className="p-4" />
       <DottedSeparator
         dotCount={80}
-        dotColor={darkMode ? "bg-gray-300" : "bg-gray-600"}
+        dotColor="bg-gray-600"
       />
       <div className="p-4" />
-      <SectionTitle title="Most successful openings" darkMode={darkMode} />
+      <SectionTitle title="Most successful openings" />
       <div className="p-4" />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -92,7 +85,6 @@ export const BestOpeningsSection: React.FC<SectionProps> = ({ darkMode }) => {
           data={whiteWinOpenings}
           title="Best Openings for White"
           color="#FF6B6B"
-          darkMode={darkMode}
           margin={{ top: 10, right: 0, left: -30, bottom: 10 }}
         />
 
@@ -100,7 +92,6 @@ export const BestOpeningsSection: React.FC<SectionProps> = ({ darkMode }) => {
           data={blackWinOpenings}
           title="Best Openings for Black"
           color="#8A2BE2"
-          darkMode={darkMode}
         />
       </div>
       
@@ -133,16 +124,16 @@ export const BestOpeningsSection: React.FC<SectionProps> = ({ darkMode }) => {
   );
 };
 
-export const WhiteOpeningsByRatingSection: React.FC<SectionProps> = ({ darkMode }) => {
+export const WhiteOpeningsByRatingSection: React.FC<SectionProps> = () => {
   return (
     <>
       <div className="p-4" />
       <DottedSeparator
         dotCount={80}
-        dotColor={darkMode ? "bg-gray-300" : "bg-gray-600"}
+        dotColor="bg-gray-600"
       />
       <div className="p-4" />
-      <SectionTitle title="Most successful openings for white across different ELO ratings" darkMode={darkMode} />
+      <SectionTitle title="Most successful openings for white across different ELO ratings" />
       <div className="p-4" />
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -150,33 +141,30 @@ export const WhiteOpeningsByRatingSection: React.FC<SectionProps> = ({ darkMode 
           data={whiteWinOpeningsBeginners}
           title='Beginner'
           color="#FF6B6B"
-          darkMode={darkMode}
         />
 
         <VerticalBarChartComponent
           data={whiteWinOpeningsIntermediate}
           title='Intermediate'
           color="#4ECDC4"
-          darkMode={darkMode}
         />
 
         <VerticalBarChartComponent
           data={whiteWinOpeningsAdvanced}
           title='Advanced'
           color="#F9C74F"
-          darkMode={darkMode}
         />
       </div>
     </>
   );
 };
 
-export const BlackOpeningsByRatingSection: React.FC<SectionProps> = ({ darkMode }) => {
+export const BlackOpeningsByRatingSection: React.FC<SectionProps> = () => {
   return (
     <>
       <div className="p-6" />
       <div className="p-4" />
-      <SectionTitle title="Most successful openings for black across different ELO ratings" darkMode={darkMode} />
+      <SectionTitle title="Most successful openings for black across different ELO ratings" />
       <div className="p-4" />
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -184,21 +172,18 @@ export const BlackOpeningsByRatingSection: React.FC<SectionProps> = ({ darkMode 
           data={blackWinOpeningsBeginners}
           title='Beginner'
           color="#8A2BE2"
-          darkMode={darkMode}
         />
 
         <VerticalBarChartComponent
           data={blackWinOpeningsIntermediate}
           title='Intermediate'
           color="#3CB371"
-          darkMode={darkMode}
         />
 
         <VerticalBarChartComponent
           data={blackWinOpeningsAdvanced}
           title='Advanced'
           color="#20B2AA"
-          darkMode={darkMode}
         />
       </div>
       
