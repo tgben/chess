@@ -13,10 +13,9 @@ const ChessDashboard: React.FC = () => {
       <div className="font-mono font-[200] w-full max-w-5xl px-4 py-8 tracking-wide">
         {/* Header and Description */}
         <div className="font-bold mb-8">
-          <h1 className="text-md mb-2 text-center">
+          <h1 className="text-md mb-6 text-center">
             Chess Opening Success and Other Analyses
           </h1>
-          <div className="p-4" />
           <p className="font-[200] text-gray text-md text-center">
             Analysis of chess opening win rates and performance statistics
             across different ELO ratings and time controls.
@@ -30,8 +29,7 @@ const ChessDashboard: React.FC = () => {
         <BlackOpeningsByRatingSection />
 
         {/* Footer */}
-        <div className="p-4" />
-        <div className="w-full text-center mt-8 mb-4 text-gray">
+        <div className="w-full text-center mt-12 mb-4 text-gray">
           <a
             href="https://github.com/tgben/chess"
             target="_blank"
