@@ -1,5 +1,4 @@
 import React from "react";
-import DottedSeparator from "./DottedSeparator";
 import { 
   OpeningPopularitySection, 
   BestOpeningsSection,
@@ -31,11 +30,6 @@ const ChessDashboard: React.FC = () => {
         <BlackOpeningsByRatingSection />
 
         {/* Footer */}
-        <div className="p-4" />
-        <DottedSeparator
-          dotCount={80}
-          dotColor="bg-gray-600"
-        />
         <div className="p-4" />
         <div className="w-full text-center mt-8 mb-4 text-gray-600">
           <a

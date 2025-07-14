@@ -1,6 +1,5 @@
 import React from 'react';
 import { VerticalBarChartComponent, OpeningPopularityChart } from './Charts';
-import DottedSeparator from './DottedSeparator';
 import { 
   whiteWinOpenings, 
   blackWinOpenings,
@@ -31,10 +30,6 @@ interface SectionProps {}
 export const OpeningPopularitySection: React.FC<SectionProps> = () => {
   return (
     <>
-      <DottedSeparator
-        dotCount={80}
-        dotColor="bg-gray-600"
-      />
       <div className="p-4" />
       <SectionTitle title="Opening Popularity Trends (2012-2024)" />
       <div className="p-4" />
@@ -71,11 +66,6 @@ export const OpeningPopularitySection: React.FC<SectionProps> = () => {
 export const BestOpeningsSection: React.FC<SectionProps> = () => {
   return (
     <>
-      <div className="p-4" />
-      <DottedSeparator
-        dotCount={80}
-        dotColor="bg-gray-600"
-      />
       <div className="p-4" />
       <SectionTitle title="Most successful openings" />
       <div className="p-4" />
@@ -127,11 +117,6 @@ export const BestOpeningsSection: React.FC<SectionProps> = () => {
 export const WhiteOpeningsByRatingSection: React.FC<SectionProps> = () => {
   return (
     <>
-      <div className="p-4" />
-      <DottedSeparator
-        dotCount={80}
-        dotColor="bg-gray-600"
-      />
       <div className="p-4" />
       <SectionTitle title="Most successful openings for white across different ELO ratings" />
       <div className="p-4" />
