@@ -27,9 +27,9 @@ interface ChartContainerProps {
 
 export const ChartContainer: React.FC<ChartContainerProps> = ({ children, title }) => {
   return (
-    <div className="border-2 border-primary rounded-sm p-6 flex flex-col items-center">
+    <div className="rounded-lg p-6 flex flex-col items-center">
       {title && (
-        <h3 className="text-md mb-3 text-gray">
+        <h3 className="text-md mb-3 text-text-gray">
           {title}
         </h3>
       )}

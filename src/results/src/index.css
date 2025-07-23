@@ -1,4 +1,10 @@
 @import 'tailwindcss';
+@import '@fontsource/fira-code';
+
+body {
+  font-family: "Fira Code", monospace;
+  overscroll-behavior: none;
+}
 
 @theme {
   --color-primary: hsl(200, 59.80%, 64.90%);

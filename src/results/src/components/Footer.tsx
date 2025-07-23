@@ -1,8 +1,7 @@
-import React from 'react';
+import React from "react";
 
 const Footer: React.FC = () => {
   return (
-    // <footer className="border-t border-gray-600 py-8 mt-16">
     <footer className="py-8 mt-16">
       <div className="max-w-5xl mx-auto px-4">
         <div className="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-8">
