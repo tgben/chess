@@ -1,5 +1,5 @@
 import React from 'react';
-import { VerticalBarChartComponent, OpeningPopularityChart } from './Charts';
+import { VerticalBarChartComponent, OpeningPopularityChart, CHART_COLORS } from './Charts';
 import { 
   whiteWinOpenings, 
   blackWinOpenings,
@@ -50,14 +50,14 @@ export const BestOpeningsSection: React.FC<SectionProps> = () => {
         <VerticalBarChartComponent
           data={whiteWinOpenings}
           title="Best Openings for White"
-          color="#FF6B6B"
+          color={CHART_COLORS.primaryLight}
           margin={{ top: 10, right: 0, left: -30, bottom: 10 }}
         />
 
         <VerticalBarChartComponent
           data={blackWinOpenings}
           title="Best Openings for Black"
-          color="#8A2BE2"
+          color={CHART_COLORS.primaryDark}
         />
       </div>
       
@@ -85,19 +85,19 @@ export const WhiteOpeningsByRatingSection: React.FC<SectionProps> = () => {
         <VerticalBarChartComponent
           data={whiteWinOpeningsBeginners}
           title='Beginner'
-          color="#FF6B6B"
+          color={CHART_COLORS.primaryLight}
         />
 
         <VerticalBarChartComponent
           data={whiteWinOpeningsIntermediate}
           title='Intermediate'
-          color="#4ECDC4"
+          color={CHART_COLORS.primary}
         />
 
         <VerticalBarChartComponent
           data={whiteWinOpeningsAdvanced}
           title='Advanced'
-          color="#F9C74F"
+          color={CHART_COLORS.primaryDark}
         />
       </div>
     </section>
@@ -113,19 +113,19 @@ export const BlackOpeningsByRatingSection: React.FC<SectionProps> = () => {
         <VerticalBarChartComponent
           data={blackWinOpeningsBeginners}
           title='Beginner'
-          color="#8A2BE2"
+          color={CHART_COLORS.primaryLight}
         />
 
         <VerticalBarChartComponent
           data={blackWinOpeningsIntermediate}
           title='Intermediate'
-          color="#3CB371"
+          color={CHART_COLORS.primary}
         />
 
         <VerticalBarChartComponent
           data={blackWinOpeningsAdvanced}
           title='Advanced'
-          color="#20B2AA"
+          color={CHART_COLORS.primaryDark}
         />
       </div>
       

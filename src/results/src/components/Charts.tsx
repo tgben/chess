@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement } from "react";
 import {
   BarChart,
   Bar,
@@ -11,29 +11,71 @@ import {
   Line,
   Legend,
 } from "recharts";
-import { openingPopularityData } from '../data/chessData';
+import { openingPopularityData } from "../data/chessData";
+
+// Chart styling constants
+export const CHART_COLORS = {
+  grid: "hsl(220, 15%, 50%)",
+  axis: "hsl(220, 20%, 80%)",
+  tooltipBackground: "hsl(225, 20%, 15%)",
+  tooltipText: "hsl(0, 0%, 95%)",
+  tooltipBorder: "hsl(220, 25%, 65%)",
+  lines: [
+    "hsl(200, 80%, 80%)", // Light blue
+    "hsl(160, 70%, 75%)", // Teal
+    "hsl(50, 85%, 80%)",  // Yellow
+    "hsl(280, 60%, 80%)", // Purple
+    "hsl(20, 80%, 80%)"   // Orange
+  ],
+  // Primary color variations for bar charts
+  primary: "hsl(200, 70%, 30%)",      // Very dark blue
+  primaryLight: "hsl(200, 70%, 35%)", // Slightly lighter than primary
+  primaryDark: "hsl(200, 70%, 25%)",  // Slightly darker than primary
+};
+
+// Chart dimensions and spacing
+const CHART_DIMENSIONS = {
+  height: 256, // h-64 in pixels
+  yAxisWidth: 150,
+  fontSize: 10,
+  lineStrokeWidth: 2,
+  lineDotRadius: 1,
+  tooltipBorderRadius: 0,
+};
+
+// Chart data ranges
+const CHART_RANGES = {
+  winRateMin: 50,
+  winRateMax: 70,
+  popularityMin: 1.25,
+  popularityMax: 3,
+};
+
+// Default margins
+const DEFAULT_MARGINS = {
+  default: { top: 10, right: 0, left: -20, bottom: 0 },
+  withNegativeLeft: { top: 10, right: 0, left: -30, bottom: 10 },
+  lineChart: { top: 10, right: 50, left: 0, bottom: 10 },
+};
 
 // Get the opening names from the data itself
-const lineDataKeys = Object.keys(openingPopularityData[0])
-  .filter(key => key !== 'year'); // Filter out the 'year' property
-
-// Define a set of colors to use for the lines
-const lineColors = ["#FF6B6B", "#1A535C", "#F9C74F", "#6A0572", "#4ECDC4"];
+const lineDataKeys = Object.keys(openingPopularityData[0]).filter(
+  (key) => key !== "year"
+);
 
 interface ChartContainerProps {
-  children: ReactElement; 
+  children: ReactElement;
   title?: string;
 }
 
-export const ChartContainer: React.FC<ChartContainerProps> = ({ children, title }) => {
+export const ChartContainer: React.FC<ChartContainerProps> = ({
+  children,
+  title,
+}) => {
   return (
     <div className="rounded-lg p-6 flex flex-col items-center">
-      {title && (
-        <h3 className="text-md mb-3 text-text-gray">
-          {title}
-        </h3>
-      )}
-      <div className="h-64 w-full">
+      {title && <h3 className="text-md mb-3 text-text-gray">{title}</h3>}
+      <div className="w-full" style={{ height: CHART_DIMENSIONS.height }}>
         <ResponsiveContainer width="100%" height="100%">
           {children}
         </ResponsiveContainer>
@@ -49,11 +91,11 @@ interface BarChartProps {
   margin?: { top: number; right: number; left: number; bottom: number };
 }
 
-export const VerticalBarChartComponent: React.FC<BarChartProps> = ({ 
-  data, 
-  title, 
+export const VerticalBarChartComponent: React.FC<BarChartProps> = ({
+  data,
+  title,
   color,
-  margin = { top: 10, right: 0, left: -20, bottom: 0 }
+  margin = DEFAULT_MARGINS.default,
 }) => {
   return (
     <ChartContainer title={title}>
@@ -65,30 +107,30 @@ export const VerticalBarChartComponent: React.FC<BarChartProps> = ({
       >
         <CartesianGrid
           strokeDasharray="3 3"
-          stroke="hsl(218, 10.80%, 85.50%)"
+          stroke={CHART_COLORS.grid}
           horizontal={true}
         />
         <XAxis
           type="number"
-          domain={[50, 70]}
-          stroke="hsl(218, 10.80%, 85.50%)"
-          fontSize={10}
+          domain={[CHART_RANGES.winRateMin, CHART_RANGES.winRateMax]}
+          stroke={CHART_COLORS.axis}
+          fontSize={CHART_DIMENSIONS.fontSize}
         />
         <YAxis
           dataKey="name"
           type="category"
-          width={150}
-          stroke="hsl(218, 10.80%, 85.50%)"
-          fontSize={10}
+          width={CHART_DIMENSIONS.yAxisWidth}
+          stroke={CHART_COLORS.axis}
+          fontSize={CHART_DIMENSIONS.fontSize}
           tickLine={false}
         />
         <Tooltip
           contentStyle={{
-            backgroundColor: "hsl(227, 13.20%, 20.80%)",
-            color: "hsl(0, 0.00%, 100.00%)",
-            border: "1px solid hsl(200, 59.80%, 64.90%)",
-            borderRadius: "0px",
-            fontSize: "12px",
+            backgroundColor: CHART_COLORS.tooltipBackground,
+            color: CHART_COLORS.tooltipText,
+            border: `1px solid ${CHART_COLORS.tooltipBorder}`,
+            borderRadius: `${CHART_DIMENSIONS.tooltipBorderRadius}px`,
+            fontSize: `${CHART_DIMENSIONS.fontSize + 2}px`,
           }}
         />
         <Bar dataKey="value" fill={color} />
@@ -101,34 +143,30 @@ interface OpeningPopularityChartProps {
   data: any[];
 }
 
-export const OpeningPopularityChart: React.FC<OpeningPopularityChartProps> = ({ data }) => {
+export const OpeningPopularityChart: React.FC<OpeningPopularityChartProps> = ({
+  data,
+}) => {
   return (
     <ChartContainer>
-      <LineChart
-        data={data}
-        margin={{ top: 10, right: 50, left: 0, bottom: 10 }}
-      >
-        <CartesianGrid
-          strokeDasharray="3 3"
-          stroke="hsl(218, 10.80%, 85.50%)"
-        />
+      <LineChart data={data} margin={DEFAULT_MARGINS.lineChart}>
+        <CartesianGrid strokeDasharray="3 3" stroke={CHART_COLORS.grid} />
         <XAxis
           dataKey="year"
-          stroke="hsl(218, 10.80%, 85.50%)"
-          fontSize={10}
+          stroke={CHART_COLORS.axis}
+          fontSize={CHART_DIMENSIONS.fontSize}
         />
         <YAxis
-          stroke="hsl(218, 10.80%, 85.50%)"
-          fontSize={10}
-          domain={[1.25, 3]}
+          stroke={CHART_COLORS.axis}
+          fontSize={CHART_DIMENSIONS.fontSize}
+          domain={[CHART_RANGES.popularityMin, CHART_RANGES.popularityMax]}
         />
         <Tooltip
           contentStyle={{
-            backgroundColor: "hsl(227, 13.20%, 20.80%)",
-            color: "hsl(0, 0.00%, 100.00%)",
-            border: "1px solid hsl(200, 59.80%, 64.90%)",
-            borderRadius: "0px",
-            fontSize: "12px",
+            backgroundColor: CHART_COLORS.tooltipBackground,
+            color: CHART_COLORS.tooltipText,
+            border: `1px solid ${CHART_COLORS.tooltipBorder}`,
+            borderRadius: `${CHART_DIMENSIONS.tooltipBorderRadius}px`,
+            fontSize: `${CHART_DIMENSIONS.fontSize + 2}px`,
           }}
         />
         <Legend />
@@ -137,9 +175,9 @@ export const OpeningPopularityChart: React.FC<OpeningPopularityChartProps> = ({ 
             key={key}
             type="monotone"
             dataKey={key}
-            stroke={lineColors[index % lineColors.length]}
-            strokeWidth={2}
-            dot={{ r: 1 }}
+            stroke={CHART_COLORS.lines[index % CHART_COLORS.lines.length]}
+            strokeWidth={CHART_DIMENSIONS.lineStrokeWidth}
+            dot={{ r: CHART_DIMENSIONS.lineDotRadius }}
           />
         ))}
       </LineChart>
