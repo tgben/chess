@@ -46,18 +46,21 @@ export const BestOpeningsSection: React.FC<SectionProps> = () => {
     <section className="mt-8">
       <SectionTitle title="Most successful openings" />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+      <div className="grid grid-cols-1 gap-4 mb-4 text-md text-text-gray">
         <VerticalBarChartComponent
           data={whiteWinOpenings}
           title="Best Openings for White"
           color={CHART_COLORS.primaryLight}
-          margin={{ top: 10, right: 0, left: -30, bottom: 10 }}
+          margin={{ top: 10, right: 0, left: 0, bottom: 10 }}
+          labelsInside={true}
         />
 
         <VerticalBarChartComponent
           data={blackWinOpenings}
           title="Best Openings for Black"
           color={CHART_COLORS.primaryDark}
+          margin={{ top: 10, right: 0, left: 5, bottom: 10 }}
+          labelsInside={true}
         />
       </div>
       

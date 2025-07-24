@@ -37,7 +37,7 @@ export const CHART_COLORS = {
 const CHART_DIMENSIONS = {
   height: 256, // h-64 in pixels
   yAxisWidth: 150,
-  fontSize: 10,
+  fontSize: 14, // Have to set the font size directly. Can't use tailwind. Sad!
   lineStrokeWidth: 2,
   lineDotRadius: 1,
   tooltipBorderRadius: 0,
@@ -46,7 +46,7 @@ const CHART_DIMENSIONS = {
 // Chart data ranges
 const CHART_RANGES = {
   winRateMin: 50,
-  winRateMax: 70,
+  winRateMax: 60,
   popularityMin: 1.25,
   popularityMax: 3,
 };
@@ -89,6 +89,7 @@ interface BarChartProps {
   title: string;
   color: string;
   margin?: { top: number; right: number; left: number; bottom: number };
+  labelsInside?: boolean;
 }
 
 export const VerticalBarChartComponent: React.FC<BarChartProps> = ({
@@ -96,6 +97,7 @@ export const VerticalBarChartComponent: React.FC<BarChartProps> = ({
   title,
   color,
   margin = DEFAULT_MARGINS.default,
+  labelsInside = false,
 }) => {
   return (
     <ChartContainer title={title}>
@@ -105,35 +107,74 @@ export const VerticalBarChartComponent: React.FC<BarChartProps> = ({
         margin={margin}
         layout="vertical"
       >
-        <CartesianGrid
-          strokeDasharray="3 3"
-          stroke={CHART_COLORS.grid}
-          horizontal={true}
-        />
         <XAxis
           type="number"
           domain={[CHART_RANGES.winRateMin, CHART_RANGES.winRateMax]}
           stroke={CHART_COLORS.axis}
           fontSize={CHART_DIMENSIONS.fontSize}
+          tick={labelsInside ? false : true}
+          axisLine={labelsInside ? false : true}
         />
         <YAxis
           dataKey="name"
           type="category"
-          width={CHART_DIMENSIONS.yAxisWidth}
+          width={labelsInside ? 0 : CHART_DIMENSIONS.yAxisWidth}
           stroke={CHART_COLORS.axis}
           fontSize={CHART_DIMENSIONS.fontSize}
           tickLine={false}
+          tick={labelsInside ? false : true}
         />
-        <Tooltip
-          contentStyle={{
-            backgroundColor: CHART_COLORS.tooltipBackground,
-            color: CHART_COLORS.tooltipText,
-            border: `1px solid ${CHART_COLORS.tooltipBorder}`,
-            borderRadius: `${CHART_DIMENSIONS.tooltipBorderRadius}px`,
-            fontSize: `${CHART_DIMENSIONS.fontSize + 2}px`,
-          }}
+        {!labelsInside && (
+          <Tooltip
+            contentStyle={{
+              backgroundColor: CHART_COLORS.tooltipBackground,
+              color: CHART_COLORS.tooltipText,
+              border: `1px solid ${CHART_COLORS.tooltipBorder}`,
+              borderRadius: `${CHART_DIMENSIONS.tooltipBorderRadius}px`,
+              fontSize: `${CHART_DIMENSIONS.fontSize}px`,
+            }}
+          />
+        )}
+        <Bar 
+          dataKey="value" 
+          fill={color}
+          label={labelsInside ? (props: any) => {
+            try {
+              if (props && props.name && props.value) {
+                return (
+                  <g>
+                    <text 
+                      x={props.x + 20} 
+                      y={props.y + props.height / 2} 
+                      fill="white" 
+                      fontSize={CHART_DIMENSIONS.fontSize}
+                      fontWeight="bold"
+                      textAnchor="start"
+                      dominantBaseline="middle"
+                    >
+                      {props.name}
+                    </text>
+                    <text 
+                      x={props.x + props.width - 10} 
+                      y={props.y + props.height / 2} 
+                      fill="white" 
+                      fontSize={CHART_DIMENSIONS.fontSize}
+                      fontWeight="bold"
+                      textAnchor="end"
+                      dominantBaseline="middle"
+                    >
+                      {props.value.toFixed(1)}%
+                    </text>
+                  </g>
+                );
+              }
+              return null;
+            } catch (error) {
+              console.error('Custom label error:', error);
+              return null;
+            }
+          } : false}
         />
-        <Bar dataKey="value" fill={color} />
       </BarChart>
     </ChartContainer>
   );
@@ -166,7 +207,7 @@ export const OpeningPopularityChart: React.FC<OpeningPopularityChartProps> = ({
             color: CHART_COLORS.tooltipText,
             border: `1px solid ${CHART_COLORS.tooltipBorder}`,
             borderRadius: `${CHART_DIMENSIONS.tooltipBorderRadius}px`,
-            fontSize: `${CHART_DIMENSIONS.fontSize + 2}px`,
+            fontSize: `${CHART_DIMENSIONS.fontSize}px`,
           }}
         />
         <Legend />
