@@ -66,12 +66,38 @@ const lineDataKeys = Object.keys(openingPopularityData[0]).filter(
 interface ChartContainerProps {
   children: ReactElement;
   title?: string;
+  verticalLabel?: boolean;
 }
 
 export const ChartContainer: React.FC<ChartContainerProps> = ({
   children,
   title,
+  verticalLabel = false,
 }) => {
+  if (verticalLabel && title) {
+    return (
+      <div className="rounded-lg flex items-center">
+        <div className="flex items-center justify-center mr-6" style={{ width: 60, height: CHART_DIMENSIONS.height }}>
+          <h3 
+            className="text-md text-text-gray font-bold"
+            style={{ 
+              transform: 'rotate(-90deg)', 
+              whiteSpace: 'nowrap',
+              transformOrigin: 'center'
+            }}
+          >
+            {title}
+          </h3>
+        </div>
+        <div className="flex-1" style={{ height: CHART_DIMENSIONS.height }}>
+          <ResponsiveContainer width="100%" height="100%">
+            {children}
+          </ResponsiveContainer>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="rounded-lg p-6 flex flex-col items-center">
       {title && <h3 className="text-md mb-3 text-text-gray">{title}</h3>}
@@ -90,6 +116,7 @@ interface BarChartProps {
   color: string;
   margin?: { top: number; right: number; left: number; bottom: number };
   labelsInside?: boolean;
+  verticalLabel?: boolean;
 }
 
 export const VerticalBarChartComponent: React.FC<BarChartProps> = ({
@@ -98,14 +125,16 @@ export const VerticalBarChartComponent: React.FC<BarChartProps> = ({
   color,
   margin = DEFAULT_MARGINS.default,
   labelsInside = false,
+  verticalLabel = false,
 }) => {
   return (
-    <ChartContainer title={title}>
+    <ChartContainer title={title} verticalLabel={verticalLabel}>
       <BarChart
         className="tracking-normal"
         data={data}
         margin={margin}
         layout="vertical"
+        barCategoryGap={2}
       >
         <XAxis
           type="number"
@@ -138,6 +167,7 @@ export const VerticalBarChartComponent: React.FC<BarChartProps> = ({
         <Bar 
           dataKey="value" 
           fill={color}
+          radius={[6, 6, 6, 6]}
           label={labelsInside ? (props: any) => {
             try {
               if (props && props.name && props.value) {

@@ -46,21 +46,23 @@ export const BestOpeningsSection: React.FC<SectionProps> = () => {
     <section className="mt-8">
       <SectionTitle title="Most successful openings" />
 
-      <div className="grid grid-cols-1 gap-4 mb-4 text-md text-text-gray">
+      <div className="grid grid-cols-1 gap-1 mb-4 text-md text-text-gray">
         <VerticalBarChartComponent
           data={whiteWinOpenings}
-          title="Best Openings for White"
+          title="White"
           color={CHART_COLORS.primaryLight}
           margin={{ top: 10, right: 0, left: 0, bottom: 10 }}
           labelsInside={true}
+          verticalLabel={true}
         />
 
         <VerticalBarChartComponent
           data={blackWinOpenings}
-          title="Best Openings for Black"
+          title="Black"
           color={CHART_COLORS.primaryDark}
-          margin={{ top: 10, right: 0, left: 5, bottom: 10 }}
+          margin={{ top: 10, right: 0, left: 0, bottom: 10 }}
           labelsInside={true}
+          verticalLabel={true}
         />
       </div>
       
@@ -84,23 +86,32 @@ export const WhiteOpeningsByRatingSection: React.FC<SectionProps> = () => {
     <section className="mt-8">
       <SectionTitle title="Most successful openings for white across different ELO ratings" />
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 gap-1">
         <VerticalBarChartComponent
           data={whiteWinOpeningsBeginners}
           title='Beginner'
           color={CHART_COLORS.primaryLight}
+          margin={{ top: 10, right: 0, left: 0, bottom: 10 }}
+          labelsInside={true}
+          verticalLabel={true}
         />
 
         <VerticalBarChartComponent
           data={whiteWinOpeningsIntermediate}
           title='Intermediate'
           color={CHART_COLORS.primary}
+          margin={{ top: 10, right: 0, left: 0, bottom: 10 }}
+          labelsInside={true}
+          verticalLabel={true}
         />
 
         <VerticalBarChartComponent
           data={whiteWinOpeningsAdvanced}
           title='Advanced'
           color={CHART_COLORS.primaryDark}
+          margin={{ top: 10, right: 0, left: 0, bottom: 10 }}
+          labelsInside={true}
+          verticalLabel={true}
         />
       </div>
     </section>
@@ -112,23 +123,32 @@ export const BlackOpeningsByRatingSection: React.FC<SectionProps> = () => {
     <section className="mt-12">
       <SectionTitle title="Most successful openings for black across different ELO ratings" />
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+      <div className="grid grid-cols-1 gap-1 mb-4">
         <VerticalBarChartComponent
           data={blackWinOpeningsBeginners}
           title='Beginner'
           color={CHART_COLORS.primaryLight}
+          margin={{ top: 10, right: 0, left: 0, bottom: 10 }}
+          labelsInside={true}
+          verticalLabel={true}
         />
 
         <VerticalBarChartComponent
           data={blackWinOpeningsIntermediate}
           title='Intermediate'
           color={CHART_COLORS.primary}
+          margin={{ top: 10, right: 0, left: 0, bottom: 10 }}
+          labelsInside={true}
+          verticalLabel={true}
         />
 
         <VerticalBarChartComponent
           data={blackWinOpeningsAdvanced}
           title='Advanced'
           color={CHART_COLORS.primaryDark}
+          margin={{ top: 10, right: 0, left: 0, bottom: 10 }}
+          labelsInside={true}
+          verticalLabel={true}
         />
       </div>
       
