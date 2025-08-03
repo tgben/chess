@@ -17,11 +17,13 @@ import {
 } from "../data/chessData";
 
 const SectionTitle = ({ title }: { title: string }) => (
-  <div className="font-[200] text-gray text-xl text-center mb-12">{title}</div>
+  <div className="font-[200] text-gray text-lg md:text-xl text-center mb-12">
+    {title}
+  </div>
 );
 
 const TextBlock = ({ children }: { children: React.ReactNode }) => (
-  <div className="text-md space-y-6">{children}</div>
+  <div className="text-sm md:text-base space-y-6">{children}</div>
 );
 
 const P = ({ children }: { children: React.ReactNode }) => (
@@ -32,7 +34,7 @@ export const OpeningPopularitySection = () => (
   <section className="py-16">
     <SectionTitle title="Opening Popularity Trends (2012-2024)" />
     <OpeningPopularityChart data={openingPopularityData} />
-    <div className="text-md mt-12 space-y-6">
+    <div className="text-sm md:text-base mt-12 space-y-6">
       <P>
         The top five White openings boast an impressive 63.95% win rate, while
         the top five Black openings reach only 59.11%. This 4.84% gap seems

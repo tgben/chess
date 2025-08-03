@@ -8,13 +8,11 @@ import {
   LineChart,
   Line,
   Legend,
-  CartesianGrid,
   Tooltip,
 } from "recharts";
 import { openingPopularityData } from "../data/chessData";
 
 const COLORS = {
-  grid: "hsl(220,15%,50%)",
   axis: "hsl(220,20%,80%)",
   tooltipBg: "hsl(225,20%,15%)",
   tooltipText: "hsl(0,0%,95%)",
@@ -26,9 +24,6 @@ const COLORS = {
     "hsl(280,60%,60%)",
     "hsl(20,80%,60%)",
   ],
-  primary: "hsl(200,70%,30%)",
-  primaryLight: "hsl(200,70%,35%)",
-  primaryDark: "hsl(200,70%,25%)",
 };
 
 export { COLORS as CHART_COLORS };
@@ -36,10 +31,10 @@ export { COLORS as CHART_COLORS };
 const VerticalLabel = ({ title }: { title: string }) => (
   <div
     className="flex items-center justify-center mr-6"
-    style={{ width: 60, height: 256 }}
+    style={{ width: 60, height: 213 }}
   >
     <h3
-      className="text-md text-text-gray font-bold"
+      className="text-sm md:text-md text-text-gray font-bold"
       style={{ transform: "rotate(-90deg)", whiteSpace: "nowrap" }}
     >
       {title}
@@ -48,40 +43,85 @@ const VerticalLabel = ({ title }: { title: string }) => (
 );
 
 const ChartWrapper = ({ children }: { children: React.ReactNode }) => (
-  <div className="flex-1" style={{ height: 256 }}>
+  <div className="flex-1" style={{ height: 213 }}>
     <ResponsiveContainer width="100%" height="100%">
       {children}
     </ResponsiveContainer>
   </div>
 );
 
-const BarLabel = ({ x, y, width, height, name, value, color }: any) =>
-  name && value ? (
+const CHART_CONSTANTS = {
+  textColor: "hsl(218, 10.80%, 85.50%)",
+  charWidth: 8,
+  lineHeight: 16,
+  leftPadding: 20,
+  rightPadding: 10,
+  reservedSpace: 80,
+} as const;
+
+const getResponsiveFontSize = () => (window.innerWidth >= 768 ? 14 : 12);
+const isDesktop = () => window.innerWidth >= 768;
+
+const BarLabel = ({ x, y, width, height, name, value, color }: any) => {
+  if (!name || !value) return null;
+
+  const availableWidth = width - CHART_CONSTANTS.reservedSpace;
+  const maxCharsPerLine = Math.floor(
+    availableWidth / CHART_CONSTANTS.charWidth
+  );
+
+  // Text wrapping logic
+  const words = name.split(" ");
+  const lines: string[] = [];
+  let currentLine = "";
+
+  words.forEach((word) => {
+    const testLine = currentLine ? `${currentLine} ${word}` : word;
+    if (testLine.length <= maxCharsPerLine) {
+      currentLine = testLine;
+    } else {
+      if (currentLine) lines.push(currentLine);
+      currentLine = word;
+    }
+  });
+  if (currentLine) lines.push(currentLine);
+
+  const totalTextHeight = lines.length * CHART_CONSTANTS.lineHeight;
+  const startY =
+    y + (height - totalTextHeight) / 2 + CHART_CONSTANTS.lineHeight / 2;
+  const fontSize = getResponsiveFontSize();
+
+  return (
     <g>
+      {lines.map((line, index) => (
+        <text
+          key={index}
+          x={x + CHART_CONSTANTS.leftPadding}
+          y={startY + index * CHART_CONSTANTS.lineHeight}
+          fill={CHART_CONSTANTS.textColor}
+          fontSize={fontSize}
+          fontWeight="bold"
+          textAnchor="start"
+          dominantBaseline="middle"
+        >
+          {line}
+        </text>
+      ))}
+      {isDesktop() && (
+        <line
+          x1={x}
+          y1={y + height}
+          x2={x + width}
+          y2={y + height}
+          stroke={color}
+          strokeWidth={2}
+        />
+      )}
       <text
-        x={x + 20}
+        x={x + width - CHART_CONSTANTS.rightPadding}
         y={y + height / 2}
-        fill="hsl(218, 10.80%, 85.50%)"
-        fontSize={14}
-        fontWeight="bold"
-        textAnchor="start"
-        dominantBaseline="middle"
-      >
-        {name}
-      </text>
-      <line
-        x1={x}
-        y1={y + height}
-        x2={x + width}
-        y2={y + height}
-        stroke={color}
-        strokeWidth={2}
-      />
-      <text
-        x={x + width - 10}
-        y={y + height / 2}
-        fill="hsl(218, 10.80%, 85.50%)"
-        fontSize={14}
+        fill={CHART_CONSTANTS.textColor}
+        fontSize={fontSize}
         fontWeight="bold"
         textAnchor="end"
         dominantBaseline="middle"
@@ -89,7 +129,8 @@ const BarLabel = ({ x, y, width, height, name, value, color }: any) =>
         {value.toFixed(1)}%
       </text>
     </g>
-  ) : null;
+  );
+};
 
 export const VerticalBarChartComponent = ({
   data,
@@ -107,8 +148,8 @@ export const VerticalBarChartComponent = ({
         data={data}
         layout="vertical"
         margin={{ top: 10, right: 0, left: 0, bottom: 10 }}
-        barCategoryGap={0}
-        maxBarSize={32}
+        barCategoryGap={8}
+        maxBarSize={48}
       >
         <XAxis type="number" domain={[50, 60]} hide />
         <YAxis dataKey="name" type="category" width={0} hide />
@@ -130,16 +171,20 @@ export const OpeningPopularityChart = ({ data }: { data: any[] }) => {
   );
   return (
     <div className="rounded-lg flex flex-col items-center">
-      <div className="w-full" style={{ height: 384 }}>
+      <div className="w-full" style={{ height: 320 }}>
         <ResponsiveContainer width="100%" height="100%">
           <LineChart
             data={data}
             margin={{ top: 10, right: 50, left: 0, bottom: 10 }}
           >
-            <XAxis dataKey="year" stroke={COLORS.axis} fontSize={14} />
+            <XAxis
+              dataKey="year"
+              stroke={COLORS.axis}
+              fontSize={getResponsiveFontSize()}
+            />
             <YAxis
               stroke={COLORS.axis}
-              fontSize={14}
+              fontSize={getResponsiveFontSize()}
               domain={[1.25, 3]}
               ticks={[1.5, 2, 2.5, 3]}
               tickFormatter={(value) => `${value}%`}
@@ -151,7 +196,7 @@ export const OpeningPopularityChart = ({ data }: { data: any[] }) => {
                 color: COLORS.tooltipText,
                 border: `1px solid ${COLORS.tooltipBorder}`,
                 borderRadius: 0,
-                fontSize: 14,
+                fontSize: getResponsiveFontSize(),
               }}
             />
             <Legend />
