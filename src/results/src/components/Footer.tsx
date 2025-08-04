@@ -1,4 +1,3 @@
-import React from "react";
 
 export default () => (
   <footer className="py-8 mt-16">

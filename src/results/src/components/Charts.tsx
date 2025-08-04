@@ -1,4 +1,4 @@
-import React from "react";
+import { ReactElement } from "react";
 import {
   BarChart,
   Bar,
@@ -42,7 +42,7 @@ const VerticalLabel = ({ title }: { title: string }) => (
   </div>
 );
 
-const ChartWrapper = ({ children }: { children: React.ReactNode }) => (
+const ChartWrapper = ({ children }: { children: ReactElement }) => (
   <div className="flex-1" style={{ height: 213 }}>
     <ResponsiveContainer width="100%" height="100%">
       {children}
@@ -75,7 +75,7 @@ const BarLabel = ({ x, y, width, height, name, value, color }: any) => {
   const lines: string[] = [];
   let currentLine = "";
 
-  words.forEach((word) => {
+  words.forEach((word: string) => {
     const testLine = currentLine ? `${currentLine} ${word}` : word;
     if (testLine.length <= maxCharsPerLine) {
       currentLine = testLine;
